@@ -1,65 +1,15 @@
-// mutation : db의 상태를 변화시킬때 사용
-let movies = [
-  {
-    id: 1,
-    name: "Avengers 2",
-    score: 3
-  },
-  {
-    id: 2,
-    name: "Avengers 3",
-    score: 2
-  },
-  {
-    id: 3,
-    name: "Godfather 1",
-    score: 1
+import fetch from 'node-fetch';
+const API_URL = "https://yts.mx/api/v2/list_movies.json"
+
+export const getMovies = (limit, rating) => {
+  let REQUEST_URL = API_URL;
+  if ( limit > 0) {
+    REQUEST_URL += `limit=${limit}`
   }
-];
-
-export const getMovies = () => movies
-
-export const getById = id => {
-  console.log("temp = ", id)
-  console.log("movies = ", movies)
-  const filteredMovies = movies.filter(movie => movie.id === id)
-  return filteredMovies[0]
-}
-
-export const deleteMovie = id => {
-  const cleanedMovies = movies.filter(movie => movie.id !== id) 
-    if (movies.length > cleanedMovies.length) {
-      movies = cleanedMovies;
-      return true;
-    } else {
-      return false;
-    }
-}
-
-export const addMovie = (name, score) => {
-  console.log(name, score)
-  const newMovie ={
-    id: Number(`${movies.length + 1}`),
-    name,
-    score
-  };
-  movies.push(newMovie);
-  return newMovie;
-}
-
-/*
-  Queries : get data (Read)
-  Mutations : mutate database. changes of state. (Create, Update, Delete)
-*/
-
-/*
-  <playground>
-  mutation{
-    addMovie (name:"hello", score: 3)
+  if ( rating > 0) {
+    REQUEST_URL += `minimum_rating=${rating}`
   }
-
-  mutation {
-	deleteMovie (id: 3) 
-  }
-
-*/
+  return fetch(REQUEST_URL)
+  .then(res => res.json())
+  .then(json => json.data.movies)
+}
