@@ -1,4 +1,4 @@
-import { getMovies, getById, addMovie} from './db';
+import { getMovies, getById, addMovie, deleteMovie} from './db';
 
 const resolvers = {
   Query: {
@@ -11,6 +11,9 @@ const resolvers = {
      console.log("what is { name, score } ? ", { name, score });
       return addMovie(name, score)
     },
+    deleteMovie: (_, {id}) => {
+      return deleteMovie(id)
+    }
   }
 };
 
