@@ -22,18 +22,18 @@ export const getMovies = () => movies
 export const getById = id => {
   console.log("temp = ", id)
   console.log("movies = ", movies)
-  const filteredMovies = movies.filter(movie => movie.id === Number(id))
+  const filteredMovies = movies.filter(movie => movie.id === id)
   return filteredMovies[0]
 }
 
 export const deleteMovie = id => {
-  const cleanedMovies = movies.fillter(movie => movie.id !== Number(id));
-  if (movies.length > cleanedMovies.length) {
-    movie = cleanedMovies;
-    return true;
-  } else {
-    return false;
-  }
+  const cleanedMovies = movies.filter(movie => movie.id !== id) 
+    if (movies.length > cleanedMovies.length) {
+      movies = cleanedMovies;
+      return true;
+    } else {
+      return false;
+    }
 }
 
 export const addMovie = (name, score) => {
@@ -44,11 +44,22 @@ export const addMovie = (name, score) => {
     score
   };
   movies.push(newMovie);
-  console.log(movies);
   return newMovie;
 }
 
 /*
-Queries : get data (Read)
-Mutations : mutate database. changes of state. (Create, Update, Delete)
+  Queries : get data (Read)
+  Mutations : mutate database. changes of state. (Create, Update, Delete)
+*/
+
+/*
+  <playground>
+  mutation{
+    addMovie (name:"hello", score: 3)
+  }
+
+  mutation {
+	deleteMovie (id: 3) 
+  }
+
 */

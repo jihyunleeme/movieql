@@ -7,8 +7,6 @@ const resolvers = {
   },
   Mutation: {
     addMovie: (_, { name, score }) => {
-     console.log("what is _ ? ", _);
-     console.log("what is { name, score } ? ", { name, score });
       return addMovie(name, score)
     },
     deleteMovie: (_, {id}) => {
